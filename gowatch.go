@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"log"
@@ -9,6 +10,20 @@ import (
 
 	"github.com/go-fsnotify/fsnotify"
 )
+
+func runGo(f string) {
+	cmd := exec.Command("go", "run", f)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		return
+	}
+	fmt.Println(out.String())
+}
 
 func main() {
 	filePtr := flag.String("f", "", "file path")
@@ -28,6 +43,7 @@ func main() {
 
 	done := make(chan bool)
 	go func() {
+		runGo(*filePtr)
 		for {
 			select {
 			case event := <-watcher.Events:
@@ -39,8 +55,7 @@ func main() {
 					cmd.Stdout = os.Stdout
 					cmd.Run()
 
-					out, _ := exec.Command("go", "run", *filePtr).Output()
-					fmt.Println(string(out))
+					runGo(*filePtr)
 				}
 			case err := <-watcher.Errors:
 				log.Println("error:", err)
