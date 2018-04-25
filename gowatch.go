@@ -24,7 +24,6 @@ func main() {
 	filePath = flag.String("f", "", "file path")
 	flag.Parse()
 
-	fmt.Println(*filePath)
 	if len(*filePath) == 0 {
 		fmt.Fprintf(os.Stderr, "usage: %s [file path]\n", os.Args[0])
 		flag.PrintDefaults()
