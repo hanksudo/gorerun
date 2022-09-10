@@ -1,4 +1,4 @@
-module gorerun
+module github.com/hanksudo/gorerun
 
 go 1.19
 
