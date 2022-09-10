@@ -1,14 +1,14 @@
-# gowatch
+# gorerun
 
 Re run progarm when file is modified.
 
 ## Installation
 
-    go get -u github.com/hanksudo/gowatch
+    go install github.com/hanksudo/gorerun@latest
 
 ## Usage
 
 ```bash
-gowatch -f examples/hello.go
-gowatch -f examples/ticktick.go
+gorerun -f examples/hello.go
+gorerun -f examples/ticktick.go
 ```
